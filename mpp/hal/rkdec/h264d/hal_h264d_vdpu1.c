@@ -831,6 +831,8 @@ MPP_RET vdpu1_h264d_gen_regs(void *hal, HalTaskInfo *task)
 {
     MPP_RET ret = MPP_ERR_UNKNOW;
 
+	mpp_err_f("%s", "VDPU1");
+
     H264dVdpuPriv_t *priv = NULL;
     H264dHalCtx_t *p_hal = (H264dHalCtx_t *)hal;
     INP_CHECK(ret, NULL == p_hal);
@@ -849,6 +851,7 @@ MPP_RET vdpu1_h264d_gen_regs(void *hal, HalTaskInfo *task)
                                         (H264dVdpu1Regs_t *)p_hal->regs));
     p_hal->in_task->valid = 0;
 
+	myy_dump_frame_and_regs(p_hal, (H264dVdpu1Regs_t *) p_hal->regs);
 __RETURN:
     return ret = MPP_OK;
 __FAILED:

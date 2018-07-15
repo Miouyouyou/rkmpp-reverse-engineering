@@ -794,7 +794,6 @@ MPP_RET vdpu2_h264d_gen_regs(void *hal, HalTaskInfo *task)
 {
     MPP_RET ret = MPP_ERR_UNKNOW;
 
-	mpp_log_f("%s", "(Myy) vdpu2\n");
     H264dVdpuPriv_t *priv = NULL;
     H264dHalCtx_t *p_hal = (H264dHalCtx_t *)hal;
     INP_CHECK(ret, NULL == p_hal);

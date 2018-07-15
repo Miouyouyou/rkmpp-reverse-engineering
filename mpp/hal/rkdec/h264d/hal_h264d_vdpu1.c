@@ -777,20 +777,6 @@ __FAILED:
     return ret;
 }
 
-static void myy_dump_regs(
-	int const dump_file_fd,
-	H264dVdpu1Regs_t const * __restrict const p_regs)
-{
-	write(dump_file_fd, p_regs, sizeof(*p_regs));
-}
-
-static void myy_dump_frame(
-	int const dump_file_fd,
-	H264dHalCtx_t *p_hal)
-{
-	write(dump_file_fd, p_hal->bitstream, p_hal->strm_len);
-}
-
 static void myy_dump_frame_and_regs(
 	H264dHalCtx_t *p_hal,
 	H264dVdpu1Regs_t *p_regs)
@@ -809,13 +795,13 @@ static void myy_dump_frame_and_regs(
 		int fd = open(regs_name_template, O_CREAT, 00644);
 		if (fd > 0) {
 			mpp_err_f("Logging regs to %s", regs_name_template);
-			myy_dump_regs(fd, p_regs);
+			write(fd, p_regs, sizeof(H264dVdpu1Regs_t));
 			close(fd);
 		}
 		fd = open(frame_name_template, O_CREAT, 00644);
 		if (fd > 0) {
 			mpp_err_f("Logging frames to %s", frame_name_template);
-			myy_dump_frame(fd, p_hal);
+			write(fd, p_hal->bitstream, p_hal->strm_len);
 			close(fd);
 		}
 	}

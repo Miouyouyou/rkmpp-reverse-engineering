@@ -53,16 +53,6 @@ MppRuntimeService::MppRuntimeService()
     allocator_valid[MPP_BUFFER_TYPE_NORMAL] = 1;
     allocator_valid[MPP_BUFFER_TYPE_V4L2] = 0;
 
-    fd = open("/dev/ion", O_RDWR);
-    if (fd < 0) {
-        allocator_valid[MPP_BUFFER_TYPE_ION] = 0;
-        mpp_log("NOT found ion allocator\n");
-    } else {
-        allocator_valid[MPP_BUFFER_TYPE_ION] = 1;
-        mpp_log("found ion allocator\n");
-        close(fd);
-    }
-
     fd = open("/dev/dri/card0", O_RDWR);
     if (fd < 0) {
         allocator_valid[MPP_BUFFER_TYPE_DRM] = 0;

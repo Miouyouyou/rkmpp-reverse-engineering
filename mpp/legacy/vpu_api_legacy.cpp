@@ -400,7 +400,7 @@ RK_S32 VpuApiLegacy::init(VpuCodecContext *ctx, RK_U8 *extraData, RK_U32 extra_s
             mpp_err("mpi->control MPP_SET_INPUT_BLOCK failed\n");
 
         if (memGroup == NULL) {
-            ret = mpp_buffer_group_get_internal(&memGroup, MPP_BUFFER_TYPE_ION);
+            ret = mpp_buffer_group_get_internal(&memGroup, MPP_BUFFER_TYPE_DRM);
             if (MPP_OK != ret) {
                 mpp_err("memGroup mpp_buffer_group_get failed\n");
                 return ret;
@@ -609,7 +609,7 @@ RK_S32 VpuApiLegacy::decode(VpuCodecContext *ctx, VideoPacket_t *pkt, DecoderOut
             MppBufferInfo   inputCommit;
 
             memset(&inputCommit, 0, sizeof(inputCommit));
-            inputCommit.type = MPP_BUFFER_TYPE_ION;
+            inputCommit.type = MPP_BUFFER_TYPE_DRM;
             inputCommit.size = pkt->size;
             inputCommit.fd = fd;
 
@@ -642,7 +642,7 @@ RK_S32 VpuApiLegacy::decode(VpuCodecContext *ctx, VideoPacket_t *pkt, DecoderOut
 
             memset(&outputCommit, 0, sizeof(outputCommit));
             /* in order to avoid interface change use space in output to transmit information */
-            outputCommit.type = MPP_BUFFER_TYPE_ION;
+            outputCommit.type = MPP_BUFFER_TYPE_DRM;
             outputCommit.fd = fd;
             outputCommit.size = width * height * 3 / 2;
             outputCommit.ptr = (void*)aDecOut->data;
@@ -966,7 +966,7 @@ RK_S32 VpuApiLegacy::encode(VpuCodecContext *ctx, EncInputStream_t *aEncInStrm, 
         MppBufferInfo   inputCommit;
 
         memset(&inputCommit, 0, sizeof(inputCommit));
-        inputCommit.type = MPP_BUFFER_TYPE_ION;
+        inputCommit.type = MPP_BUFFER_TYPE_DRM;
         inputCommit.size = aEncInStrm->size;
         inputCommit.fd = fd;
 
@@ -1000,7 +1000,7 @@ RK_S32 VpuApiLegacy::encode(VpuCodecContext *ctx, EncInputStream_t *aEncInStrm, 
 
         memset(&outputCommit, 0, sizeof(outputCommit));
         /* in order to avoid interface change use space in output to transmit information */
-        outputCommit.type = MPP_BUFFER_TYPE_ION;
+        outputCommit.type = MPP_BUFFER_TYPE_DRM;
         outputCommit.fd = fd;
         outputCommit.size = tmp[1];
         outputCommit.ptr = (void*)aEncOut->data;
@@ -1196,7 +1196,7 @@ RK_S32 VpuApiLegacy::encoder_sendframe(VpuCodecContext *ctx, EncInputStream_t *a
         MppBufferInfo   inputCommit;
 
         memset(&inputCommit, 0, sizeof(inputCommit));
-        inputCommit.type = MPP_BUFFER_TYPE_ION;
+        inputCommit.type = MPP_BUFFER_TYPE_DRM;
         inputCommit.size = size;
         inputCommit.fd = fd;
 

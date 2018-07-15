@@ -189,7 +189,7 @@ MPP_RET hal_h264d_init(void *hal, MppHalCfg *cfg)
 #ifdef RKPLATFORM
         mpp_log_f("mpp_buffer_group_get_internal used ion In");
         FUN_CHECK(ret = mpp_buffer_group_get_internal
-                        (&p_hal->buf_group, MPP_BUFFER_TYPE_ION));
+                        (&p_hal->buf_group, MPP_BUFFER_TYPE_DRM));
 #else
         FUN_CHECK(ret = mpp_buffer_group_get_internal
                         (&p_hal->buf_group, MPP_BUFFER_TYPE_NORMAL));

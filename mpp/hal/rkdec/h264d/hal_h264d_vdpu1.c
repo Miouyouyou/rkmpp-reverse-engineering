@@ -781,7 +781,7 @@ static void myy_dump_regs(
 	int const dump_file_fd,
 	H264dVdpu1Regs_t const * __restrict const p_regs)
 {
-	write(dump_file_fd, p_regs, sizeof(p_regs));
+	write(dump_file_fd, p_regs, sizeof(*p_regs));
 }
 
 static void myy_dump_frame(
@@ -795,7 +795,7 @@ static void myy_dump_frame_and_regs(
 	H264dHalCtx_t *p_hal,
 	H264dVdpu1Regs_t *p_regs)
 {
-	static uint_fast8_t remaining_dumps = 5;
+	static uint_fast8_t remaining_dumps = 10;
 	static char * __restrict const regs_name_template = 
 		"/tmp/mpp_dump_0_regs";
 	static char * __restrict const frame_name_template =
@@ -808,11 +808,13 @@ static void myy_dump_frame_and_regs(
 
 		int fd = open(regs_name_template, O_CREAT, 00644);
 		if (fd > 0) {
+			mpp_err_f("Logging regs to %s", regs_name_template);
 			myy_dump_regs(fd, p_regs);
 			close(fd);
 		}
 		fd = open(frame_name_template, O_CREAT, 00644);
 		if (fd > 0) {
+			mpp_err_f("Logging frames to %s", frame_name_template);
 			myy_dump_frame(fd, p_hal);
 			close(fd);
 		}

@@ -53,12 +53,12 @@ static RK_S32 mpp_device_set_client_type(int dev, RK_S32 client_type)
     RK_S32 ret;
 
     if (mpp_device_ioctl_version < 0) {
-        mpp_log_f("VPU_IOC_SET_CLIENT_TYPE - %lu\n", (unsigned long)client_type);
+        /*mpp_log_f("VPU_IOC_SET_CLIENT_TYPE - %lu\n", (unsigned long)client_type);*/
         ret = ioctl(dev, VPU_IOC_SET_CLIENT_TYPE, (unsigned long)client_type);
         if (!ret) {
             mpp_device_ioctl_version = 0;
         } else {
-            mpp_log_f("VPU_IOC_SET_CLIENT_TYPE_U32 - %u\n", client_type);
+            //mpp_log_f("VPU_IOC_SET_CLIENT_TYPE_U32 - %u\n", client_type);
             ret = ioctl(dev, VPU_IOC_SET_CLIENT_TYPE_U32, (RK_U32)client_type);
             if (!ret)
                 mpp_device_ioctl_version = 1;
@@ -73,12 +73,12 @@ static RK_S32 mpp_device_set_client_type(int dev, RK_S32 client_type)
                      (VPU_IOC_SET_CLIENT_TYPE) :
                      (VPU_IOC_SET_CLIENT_TYPE_U32);
 
-        mpp_log_f("VPU_IOC_SET_CLIENT_TYPE == %d\n"
+        /*mpp_log_f("VPU_IOC_SET_CLIENT_TYPE == %d\n"
 			"VPU_IOC_SET_CLIENT_TYPE_U32 == %d\n"
 			"ioctl(dev, %d, %d)",
 			VPU_IOC_SET_CLIENT_TYPE,
 			VPU_IOC_SET_CLIENT_TYPE_U32,
-			cmd, client_type);
+			cmd, client_type);*/
         ret = ioctl(dev, cmd, client_type);
     }
 
@@ -158,9 +158,9 @@ MPP_RET mpp_device_send_reg(RK_S32 dev, RK_U32 *regs, RK_U32 nregs)
     if (mpp_device_debug) {
         RK_U32 i;
 
-        for (i = 0; i < nregs; i++) {
+        /*for (i = 0; i < nregs; i++) {
             mpp_log_f("set reg[%03d]: %08x\n", i, regs[i]);
-        }
+        }*/
     }
 
     nregs *= sizeof(RK_U32);
@@ -195,9 +195,9 @@ MPP_RET mpp_device_wait_reg(RK_S32 dev, RK_U32 *regs, RK_U32 nregs)
     if (mpp_device_debug) {
         RK_U32 i;
 
-        for (i = 0; i < nregs; i++) {
+        /*for (i = 0; i < nregs; i++) {
             mpp_log_f("get reg[%03d]: %08x\n", i, regs[i]);
-        }
+        }*/
     }
 
     return ret;
@@ -213,8 +213,8 @@ MPP_RET mpp_device_send_reg_with_id(RK_S32 dev, RK_S32 id, void *param,
         return ret;
     }
 
-    mpp_log_f("(Myy) ioctl(dev, IOW(VPU_IOC_MAGIC, %d, %d), %p)\n",
-		id, size, param);
+    /*mpp_log_f("(Myy) ioctl(dev, IOW(VPU_IOC_MAGIC, %d, %d), %p)\n",
+		id, size, param);*/
 
     ret = (RK_S32)ioctl(dev, VPU_IOC_WRITE(id, size), param);
     if (ret) {

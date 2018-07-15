@@ -83,3 +83,5 @@ Build
 #
 /obj-arm-linux-gnueabihf/
 /obj-aarch64-linux-gnu/
+*.kate-swp
+

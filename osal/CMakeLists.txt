@@ -8,15 +8,12 @@ find_package(Threads)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
-if (HAVE_DRM)
-    add_definitions(-DHAVE_DRM)
-    set(DRM_FILES allocator/allocator_drm.c)
-endif()
+add_definitions(-DHAVE_DRM)
+set(DRM_FILES allocator/allocator_drm.c)
 
 set(MPP_ALLOCATOR
     allocator/allocator_std.c
-    allocator/allocator_ion.c
-    ${DRM_FILES}
+    allocator/allocator_drm.c
 )
 
 add_library(osal STATIC

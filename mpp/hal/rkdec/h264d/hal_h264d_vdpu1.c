@@ -781,29 +781,29 @@ static void myy_dump_frame_and_regs(
 	H264dHalCtx_t *p_hal,
 	H264dVdpu1Regs_t *p_regs)
 {
-	static uint_fast8_t remaining_dumps = 10;
-	static char * __restrict const regs_name_template = 
-		"/tmp/mpp_dump_0_regs";
-	static char * __restrict const frame_name_template =
-		"/tmp/mpp_dump_0_frame";
+	static uint_fast8_t dumps = 0;
+	char regs_name[25];
+	char frame_name[25];
 
-	if (remaining_dumps--)
+	mpp_err_f("%s", "dumping");
+	if (dumps < 10)
 	{
-		regs_name_template[14]  = (char) ('0' + remaining_dumps);
-		frame_name_template[14] = (char) ('0' + remaining_dumps);
+		snprintf(regs_name, 24, "/tmp/mpp_dump_%04d_regs", dumps);
+		snprintf(frame_name, 24, "/tmp/mpp_dump_%04d_frame", dumps);
 
-		int fd = open(regs_name_template, O_CREAT, 00644);
+		int fd = open(regs_name, O_CREAT | O_RDWR, 00644);
 		if (fd > 0) {
-			mpp_err_f("Logging regs to %s", regs_name_template);
-			write(fd, p_regs, sizeof(H264dVdpu1Regs_t));
+			mpp_err_f("Logging regs to %s", regs_name);
+			mpp_err_f("Wrote %d bytes", write(fd, p_regs, sizeof(H264dVdpu1Regs_t)));
 			close(fd);
 		}
-		fd = open(frame_name_template, O_CREAT, 00644);
+		fd = open(frame_name, O_CREAT | O_RDWR, 00644);
 		if (fd > 0) {
-			mpp_err_f("Logging frames to %s", frame_name_template);
-			write(fd, p_hal->bitstream, p_hal->strm_len);
+			mpp_err_f("Logging frames to %s", frame_name);
+			mpp_err_f("Wrote %d bytes", write(fd, p_hal->bitstream, p_hal->strm_len));
 			close(fd);
 		}
+		dumps++;
 	}
 }
 

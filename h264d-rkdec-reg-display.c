@@ -707,5 +707,6 @@ int main(int argc, char **argv)
 
 	print_regs(&regs);
 out:
+	close(fd);
 	return 0;
 }

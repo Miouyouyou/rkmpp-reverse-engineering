@@ -665,7 +665,7 @@ static void print_regs(
 	printf("SwReg57.sw_cache_en           : 1  : %d\n", regs->SwReg57.sw_cache_en        );
 	printf("SwReg57.reserve0              : 24 : %d\n", regs->SwReg57.reserve0           );
 	for (int i=0; i < 43; i++)
-		printf("SwReg58_100[%d]               : 32 : %d\n", i, regs->SwReg58_100[43]);
+		printf("SwReg58_100[%d]               : 32 : %d\n", i, regs->SwReg58_100[i]);
 }
 
 int main(int argc, char **argv)

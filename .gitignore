@@ -85,5 +85,4 @@ Build
 /obj-aarch64-linux-gnu/
 *.kate-swp
 
-.displayer
-
+displayer

@@ -786,7 +786,7 @@ static void myy_dump_frame_and_regs(
 	char frame_name[25];
 
 	mpp_err_f("%s", "dumping");
-	if (dumps < 10)
+	if (dumps < 120)
 	{
 		snprintf(regs_name, 24, "/tmp/mpp_dump_%04d_regs", dumps);
 		snprintf(frame_name, 24, "/tmp/mpp_dump_%04d_frame", dumps);

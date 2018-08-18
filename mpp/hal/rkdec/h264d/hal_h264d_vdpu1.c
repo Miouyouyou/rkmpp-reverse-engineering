@@ -784,23 +784,40 @@ static void myy_dump_frame_and_regs(
 	static uint_fast8_t dumps = 0;
 	char regs_name[25];
 	char frame_name[25];
+	char qtable_name[25];
 
 	mpp_err_f("%s", "dumping");
 	if (dumps < 120)
 	{
 		snprintf(regs_name, 24, "/tmp/mpp_dump_%04d_regs", dumps);
 		snprintf(frame_name, 24, "/tmp/mpp_dump_%04d_frame", dumps);
+		snprintf(qtable_name, 24, "/tmp/mpp_dump_%04d_qtbl", dumps);
 
 		int fd = open(regs_name, O_CREAT | O_RDWR, 00644);
 		if (fd > 0) {
-			mpp_err_f("Logging regs to %s", regs_name);
-			mpp_err_f("Wrote %d bytes", write(fd, p_regs, sizeof(H264dVdpu1Regs_t)));
+			int const bytes_written = write(fd,
+				p_regs, sizeof(H264dVdpu1Regs_t));
+			//mpp_err_f("Logging regs to %s", regs_name);
+			//mpp_err_f("Wrote %d bytes", bytes_written);
 			close(fd);
 		}
 		fd = open(frame_name, O_CREAT | O_RDWR, 00644);
 		if (fd > 0) {
-			mpp_err_f("Logging frames to %s", frame_name);
-			mpp_err_f("Wrote %d bytes", write(fd, p_hal->bitstream, p_hal->strm_len));
+			int const bytes_written = write(fd,
+				p_hal->bitstream, p_hal->strm_len);
+			//mpp_err_f("Logging frames to %s", frame_name);
+			//mpp_err_f("Wrote %d bytes", bytes_written);
+			close(fd);
+		}
+		fd = open(qtable_name, O_CREAT | O_RDWR, 00644);
+		if (fd > 0) {
+			int const bytes_written = write(fd,
+				p_hal->cabac_buf,
+				VDPU_CABAC_TAB_SIZE
+				+ VDPU_SCALING_LIST_SIZE
+				+ VDPU_POC_BUF_SIZE);
+			//mpp_err_f("Logging qtable to %s", frame_name);
+			//mpp_err_f("Wrote %d bytes", bytes_written);
 			close(fd);
 		}
 		dumps++;
